@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ControlChartInfoDTO {
+public class ControlChartInfoDTO  {
     private String id;
     private Integer sampleCycle;
     private Integer sampleCnt;

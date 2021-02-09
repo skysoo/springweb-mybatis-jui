@@ -16,11 +16,11 @@
 --         ORDER BY "MYBATISTEST"."XBAR_R".id DESC
     </select>
 
-    <select id="selectDataById" parameterType="String" resultMap="xBarRResult">
+    <select id="selectById" parameterType="String" resultMap="xBarRResult">
         SELECT "MYBATISTEST"."XBAR_R".*
         FROM "MYBATISTEST"."XBAR_R"
         WHERE
-            <if test="value != null">"id" = #{value }</if>
+            <if test="value != null">"info_id" = #{value}</if>
     </select>
 
     <!--  SelectKey를 통해 SeqId 값 추출  -->
