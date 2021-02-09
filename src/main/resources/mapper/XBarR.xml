@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chart.jui.mapper.XBarRMapper">
+
+    <resultMap id="xBarRResult" type="com.chart.jui.dto.XBarRDTO">
+        <result column="id" property="id" />
+        <result column="range_average" property="rangeAverage"/>
+        <result column="value_average" property="valueAverage"/>
+        <result column="info_id" property="infoId"/>
+        <result column="create_tm" property="createTm" />
+    </resultMap>
+
+    <select id="selectByAll" resultMap="xBarRResult">
+        SELECT "MYBATISTEST"."XBAR_R".*
+        FROM "MYBATISTEST"."XBAR_R"
+--         ORDER BY "MYBATISTEST"."XBAR_R".id DESC
+    </select>
+
+    <select id="selectDataById" parameterType="String" resultMap="xBarRResult">
+        SELECT "MYBATISTEST"."XBAR_R".*
+        FROM "MYBATISTEST"."XBAR_R"
+        WHERE
+            <if test="value != null">"id" = #{value }</if>
+    </select>
+
+    <!--  SelectKey를 통해 SeqId 값 추출  -->
+    <insert id="insertData" parameterType="com.chart.jui.dto.XBarRDTO">
+        <selectKey resultType="string" keyProperty="id" order="BEFORE">
+            select nextval('"MYBATISTEST".xbar_r_seq');
+        </selectKey>
+
+        insert into "MYBATISTEST"."XBAR_R"
+        ("id", "range_average", "value_average", info_id)
+        values
+        (#{id},#{range_average},#{value_average},#{info_id})
+    </insert>
+
+    <delete id="deleteData" parameterType="String">
+        DELETE FROM "MYBATISTEST"."XBAR_R"
+        WHERE
+        <if test="value != null">"id" = #{value }</if>
+    </delete>
+
+    <delete id="deleteDataByAll" parameterType="String">
+        DELETE FROM "MYBATISTEST"."XBAR_R"
+    </delete>
+</mapper>

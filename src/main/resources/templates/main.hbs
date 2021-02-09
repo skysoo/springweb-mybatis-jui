@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>관리도</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!--부트스트랩 css 추가-->
+    <link rel="stylesheet" href="/css/lib/bootstrap.min.css">
+</head>
+
+<body>
+    <h1>관리도 기준 정보</h1>
+
+    <div class="col-md-12">
+        <!-- 목록 출력 영역 -->
+        <table id="control-chart-info-table" class="table table-horizontal table-bordered">
+            <thead class="thead-strong">
+            <tr>
+                <th>분류키</th>
+                <th>표본 주기</th>
+                <th>표본 개수</th>
+                <th>XBar UCL</th>
+                <th>XBar CL</th>
+                <th>XBar LCL</th>
+                <th>R UCL</th>
+                <th>R CL</th>
+                <th>R LCL</th>
+                <th>최종수정일</th>
+            </tr>
+            </thead>
+            <tbody id="tbody">
+            {{#each chartInfoVOList}}
+                <tr>
+                    <td><button type="button" class="btn btn-primary" id="btn-select">{{id}}</button></td>
+                    <td>{{sampleCycle}}</td>
+                    <td>{{sampleCnt}}</td>
+                    <td>{{xbarUcl}}</td>
+                    <td>{{xbarCl}}</td>
+                    <td>{{xbarLcl}}</td>
+                    <td>{{rUcl}}</td>
+                    <td>{{rCl}}</td>
+                    <td>{{rLcl}}</td>
+                    <td>{{createTm}}</td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+    <!--부트스트랩 js, jquery 추가-->
+    <script src="/js/lib/jquery.min.js"></script>
+    <script src="/js/lib/bootstrap.min.js"></script>
+
+    <!-- 사용자 js 추가 -->
+    <script src="/js/app/main.js"></script>
+</body>
+</html>

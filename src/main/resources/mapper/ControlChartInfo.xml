@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chart.jui.mapper.ControlChartInfoMapper">
+
+    <resultMap id="controlChartInfoResult" type="com.chart.jui.dto.ControlChartInfoDTO">
+        <result column="id" property="id" />
+        <result column="sample_cycle" property="sampleCycle"/>
+        <result column="sample_cnt" property="sampleCnt"/>
+        <result column="xbar_ucl" property="xbarUcl"/>
+        <result column="xbar_cl" property="xbarCl" />
+        <result column="xbar_lcl" property="xbarLcl" />
+        <result column="r_ucl" property="rUcl" />
+        <result column="r_cl" property="rCl" />
+        <result column="r_lcl" property="rLcl" />
+        <result column="create_tm" property="createTm" />
+    </resultMap>
+
+    <select id="selectByAll" resultMap="controlChartInfoResult">
+        SELECT "MYBATISTEST"."CONTROL_CHART_INFO".*
+        FROM "MYBATISTEST"."CONTROL_CHART_INFO"
+--         ORDER BY "MYBATISTEST"."CONTROL_CHART_INFO".id DESC
+    </select>
+
+    <select id="selectDataById" parameterType="String" resultMap="controlChartInfoResult">
+        SELECT "MYBATISTEST"."CONTROL_CHART_INFO".*
+        FROM "MYBATISTEST"."CONTROL_CHART_INFO"
+        WHERE
+            <if test="value != null">"id" = #{value }</if>
+    </select>
+
+    <!--  SelectKey를 통해 SeqId 값 추출  -->
+    <insert id="insertData" parameterType="com.chart.jui.dto.ControlChartInfoDTO">
+        insert into "MYBATISTEST"."CONTROL_CHART_INFO"
+        ("id", "sample_cycle", "sample_cnt", "xbar_ucl","xbar_cl","xbar_lcl", "r_ucl", "r_cl", "r_lcl")
+        values
+        (#{id},#{sample_cycle},#{sample_cnt},#{xbar_ucl},#{xbar_cl},#{xbar_lcl},#{r_ucl}
+        ,#{r_cl},#{r_lcl})
+    </insert>
+
+    <update id="updateData" parameterType="com.chart.jui.dto.ControlChartInfoDTO">
+        UPDATE "MYBATISTEST"."CONTROL_CHART_INFO".*
+        SET "sample_cycle" = #{sample_cycle}, "sample_cnt" = #{sample_cnt}
+        WHERE
+            <if test="dd != null">"id" = #{value }</if>
+    </update>
+
+    <delete id="deleteData" parameterType="String">
+        DELETE FROM "MYBATISTEST"."CONTROL_CHART_INFO"
+        WHERE
+        <if test="value != null">"id" = #{value }</if>
+    </delete>
+
+    <delete id="deleteDataByAll" parameterType="String">
+        DELETE FROM "MYBATISTEST"."CONTROL_CHART_INFO"
+    </delete>
+</mapper>

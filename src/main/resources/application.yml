@@ -1,0 +1,20 @@
+# springboot
+server:
+  port: 8080
+  tomcat:
+    max-http-form-post-size: -1
+
+# spring profiles
+spring:
+  profiles:
+    active: local
+
+# SPRING local 환경
+--- # 상단은 공통 설정, 하단은 개별 설정
+spring:
+  profiles: local
+  datasource:
+    url: jdbc:postgresql://192.168.10.7:5432/postgres
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
