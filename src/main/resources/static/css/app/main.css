@@ -1,0 +1,35 @@
+.canvas {
+    background-color: #eee;
+}
+
+.container {
+    /*width: 100%;*/
+    display: grid;
+    /*grid-template-rows: repeat(1,400px);*/
+    /*grid-template-columns: repeat(4, 400px);*/
+}
+
+.header {
+    width: 100%;
+    /*grid-template-rows: repeat(1,100px);*/
+}
+
+.item1 {
+    grid-column-start: 1;
+    grid-column-end: 5;
+}
+
+.item2 {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.item3 {
+    grid-column-start: 1;
+    grid-column-end: 5;
+}
+
+.footer {
+    width: 100%;
+    /*grid-template-rows: repeat(1,100px);*/
+}

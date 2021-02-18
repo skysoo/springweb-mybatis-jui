@@ -1,0 +1,179 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>XBarR 관리도</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <!--부트스트랩 css 추가-->
+    <link rel="stylesheet" href="/css/lib/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/app/main.css">
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
+
+<body>
+<div class="container">
+    <div class="header">
+        <div>
+            <canvas id="header" height="30"></canvas>
+        </div>
+    </div>
+    <div>
+        <canvas id="canvas1"></canvas>
+    </div>
+    <div class="footer">
+        <div class="col-md-12">
+            <!-- 목록 출력 영역 -->
+            <table class="table table-horizontal table-bordered">
+                <thead class="thead-strong">
+                <tr>
+                    <th>ID</th>
+                    <th>범위평균</th>
+                    <th>표본평균</th>
+                    <th>최종수정일</th>
+                </tr>
+                </thead>
+                <tbody id="tbody">
+                {{#each xBarRVOList}}
+                    <tr>
+                        <td>{{id}}</td>
+                        <td>{{rangeAverage}}</td>
+                        <td>{{valueAverage}}</td>
+                        <td>{{createTm}}</td>
+                    </tr>
+                {{/each}}
+                {{#unless xBarRVOList}}
+                    <tr>
+                        {{#if isError}}
+                            <td colspan="5">No Data Found</td>
+                        {{else}}
+                            <td colspan="6">No Data Found</td>
+                        {{/if}}
+                    </tr>
+                {{/unless}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    const ucl = {{dto.xbarUcl}};
+    const cl = {{dto.xbarCl}};
+    const lcl = {{dto.xbarLcl}};
+    let chartLabels = [];
+    let chartData = [];
+    let chartDataUCL = [];
+    let chartDataCL = [];
+    let chartDataLCL = [];
+    window.chartColors = {
+        red: 'rgb(255, 99, 132)',
+        orange: 'rgb(255, 159, 64)',
+        yellow: 'rgb(255, 205, 86)',
+        green: 'rgb(75, 192, 192)',
+        blue: 'rgb(54, 162, 235)',
+        purple: 'rgb(153, 102, 255)',
+        grey: 'rgb(201, 203, 207)',
+        black: 'rgb(0,0,0)'
+    };
+
+    // 차트 업데이트
+    // let timer = setInterval(function () {
+    //     console.log("refresh")
+    //     window.myLine.update();
+    // }, 1000);
+
+    window.onload = function () {
+        let ctx1 = document.getElementById('canvas1').getContext('2d');
+        window.myLine = new Chart(ctx1, config);
+    };
+
+    $.getJSON("https://localhost:8080/xBarR",
+            function (xBarRList) {
+                $.each(xBarRList, function (inx, obj) {
+                    chartLabels.push(obj.createTm);
+                    chartData.push(obj.valueAverage);
+                    chartDataUCL.push(ucl);
+                    chartDataCL.push(cl);
+                    chartDataLCL.push(lcl);
+                });
+
+                console.log("create Chart")
+                window.myLine.update();
+            });
+
+    let lineChartData = {
+        labels: chartLabels,
+        datasets: [
+            {
+                label: "XBar Control Chart",
+                backgroundColor: window.chartColors.blue,
+                borderColor: window.chartColors.blue,
+                fill: false,
+                data: chartData
+            },
+            {
+                label: "UCL",
+                backgroundColor: window.chartColors.orange,
+                borderColor: window.chartColors.orange,
+                fill: false,
+                pointRadius: 0,
+                data: chartDataUCL
+            },
+            {
+                label: "CL",
+                backgroundColor: window.chartColors.black,
+                borderColor: window.chartColors.black,
+                borderDash: [5, 5],
+                fill: false,
+                pointRadius: 0,
+                data: chartDataCL
+            },
+            {
+                label: "LCL",
+                backgroundColor: window.chartColors.orange,
+                borderColor: window.chartColors.orange,
+                fill: false,
+                pointRadius: 0,
+                data: chartDataLCL
+            }
+
+        ]
+    }
+
+    let config = {
+        type: 'line',
+        data: lineChartData,
+        options: {
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Time'
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        max: ucl*1.5,
+                        min: lcl*1.5
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Value'
+                    }
+                }]
+            }
+        }
+
+    }
+</script>
+
+<!--부트스트랩 js, jquery 추가-->
+<script src="/js/lib/jquery.min.js"></script>
+<script src="/js/lib/bootstrap.min.js"></script>
+<script src="/js/app/draw.js"></script>
+</body>
+</html>

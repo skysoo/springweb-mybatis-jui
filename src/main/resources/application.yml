@@ -3,14 +3,24 @@ server:
   port: 8080
   tomcat:
     max-http-form-post-size: -1
+  ssl:
+    enabled: true
+    key-alias: juikeystore
+    key-store: juikeystore.jks
+    key-store-password: '123123'
+    key-password: '123123'
+    trust-store: juitrust.jks
+    trust-store-password: '123123'
 
 # spring profiles
 spring:
   profiles:
     active: local
+#  mvc:
+#    ignore-default-model-on-redirect: false
 
-# SPRING local È¯°æ
---- # »ó´ÜÀº °øÅë ¼³Á¤, ÇÏ´ÜÀº °³º° ¼³Á¤
+# SPRING local í™˜ê²½
+--- # ìƒë‹¨ì€ ê³µí†µ ì„¤ì •, í•˜ë‹¨ì€ ê°œë³„ ì„¤ì •
 spring:
   profiles: local
   datasource:
@@ -18,3 +28,4 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: postgres
+

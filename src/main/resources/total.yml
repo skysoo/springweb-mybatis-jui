@@ -1,0 +1,23 @@
+# 통합 설정
+server:
+  port: 8080
+
+# 저장 정보 설정
+spring:
+  datasource:
+    url: jdbc:postgresql://192.168.10.7:5432/postgres
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+
+total:
+  protocol: HTTPS
+  queue:
+    - id: queue1
+      machines: abc123, abc456
+      limit: 100
+      delay-time: 10 # 단위는 seconds
+    - id: queue2
+      machines: xyz123, xyz456
+      limit: 200
+      delay-time: 5

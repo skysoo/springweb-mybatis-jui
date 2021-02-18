@@ -14,12 +14,14 @@ public class XBarRVO implements Serializable {
     private final String id;
     private final float rangeAverage;
     private final float valueAverage;
+    private String infoId;
     private final String createTm;
 
     public XBarRVO(XBarRDTO dto) {
         this.id = dto.getId();
         this.rangeAverage = dto.getRangeAverage();
         this.valueAverage = dto.getValueAverage();
+        this.infoId = dto.getInfoId();
         this.createTm = dto.getCreateTm();
     }
 }

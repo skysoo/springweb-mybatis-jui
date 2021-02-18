@@ -1,13 +1,13 @@
 let main = {
-    init : function () {
+    init: function () {
         let _this = this;
 
         $('#btn-select').on('click', function () {
-            console.log("click the btn-select button")
+            console.log(`click the btn-select button`)
             _this.select();
         });
     },
-    select : function () {
+    select: function () {
         let tr = $('#control-chart-info-table tbody tr');
         let td = tr.children();
         // 반복문 사용해서 배열에 담자
@@ -29,20 +29,7 @@ let main = {
             createTm: td.eq(9).text()
         };
 
-        let s = JSON.stringify(data);
-        console.log(s);
-
-        $.ajax({
-            type: 'POST',
-            url: '/controlChart',
-            dataType: 'json',
-            contentType:'application/json; charset=utf-8',
-            data: JSON.stringify(data)
-        });
-    },
-    select1 : function () {
-        let url = "/postList";
-        location.href = url;
+        draw.redirect(data);
     }
 };
 

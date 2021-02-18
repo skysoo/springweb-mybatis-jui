@@ -5,18 +5,34 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+
 @Getter
 @NoArgsConstructor
-public class ControlChartInfoDTO  {
+public class ControlChartInfoDTO implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    @NotBlank
     private String id;
+    @NotNull
     private Integer sampleCycle;
+    @NotNull
     private Integer sampleCnt;
+    @NotNull
     private Float xbarUcl;
+    @NotNull
     private Float xbarCl;
+    @NotNull
     private Float xbarLcl;
+    @NotNull
     private Float rUcl;
+    @NotNull
     private Float rCl;
+    @NotNull
     private Float rLcl;
+    @NotBlank
     private String createTm;
 
     @Builder

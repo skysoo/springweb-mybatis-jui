@@ -1,0 +1,49 @@
+# 공정 별 설정
+common:
+  collect-info: # 수집 정보 설정
+    - type: db
+        url: jdbc:postgresql://192.168.10.7:5432/postgres
+        id: postgres
+        pw: postgres
+  machines:
+    - key: abc123 # or abc*
+        nelson-rules: 1,2,3,4,5,6,7,8
+        control:
+          process-capa: # 공정 능력 설정
+            - type: cp
+              cycle: 1d
+            - type: pp
+              cycle: 10d
+          charts: # 관리도 설정
+            - type: I-MR
+              cycle: -1
+              cnt: -1
+            - type: XBAR-R
+              cycle: 30m
+              cnt: 5
+            - type: XBAR-S
+              cycle: 1h
+              cnt: 10
+        alert:  # ALERT 설정은 분류키별로 CONFIG에서 할게 아니라 DB에서 수행해야 하지 않나..
+          level: ERROR
+          target: <target-key> # ex) 팀 단위, alert 대상 DB가 있다는 가정하에 DB의 특정컬럼을 키값으로 대상 지정\
+          module: SMS, EMAIL, KAKAO
+    - key: xyz456 # or xyz*
+        nelson-rules: 1,5,7,8
+        control:
+          process-capa:
+            - type: cp
+              cycle: 1d
+          charts:
+            - type: XBAR-R
+              cycle: 30m
+              cnt: 5
+            - type: XBAR-S
+              cycle: 1h
+              cnt: 10
+        alert:
+          level: ERROR
+          target: <target-key> # ex) 팀 단위, alert 대상 DB가 있다는 가정하에 DB의 특정컬럼을 키값으로 대상 지정\
+          module: SMS, EMAIL, KAKAO
+
+
