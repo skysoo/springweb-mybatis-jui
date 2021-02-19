@@ -21,6 +21,9 @@
         FROM "MYBATISTEST"."XBAR_R"
         WHERE
             <if test="value != null">"info_id" = #{value}</if>
+            and to_timestamp(create_tm, 'YYYYMMDD:HH24MISS')
+             between to_timestamp(to_char(now()- interval '10 min','YYYYMMDD:HH24MISS'), 'YYYYMMDD:HH24MISS')
+             and to_timestamp(to_char(now(),'YYYYMMDD:HH24MISS'), 'YYYYMMDD:HH24MISS')
     </select>
 
     <!--  SelectKey를 통해 SeqId 값 추출  -->
@@ -32,7 +35,7 @@
         insert into "MYBATISTEST"."XBAR_R"
         ("id", "range_average", "value_average", info_id)
         values
-        (#{id},#{range_average},#{value_average},#{info_id})
+        (#{id},#{rangeAverage},#{valueAverage},#{infoId})
     </insert>
 
     <delete id="deleteData" parameterType="String">
